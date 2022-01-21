@@ -378,12 +378,15 @@ def examine_item(item_name):
                 code_list = try_code.split()
                 code = " ".join(code_list)
                 if code == password:
-                    item_found = object_relations[item["name"]].pop()
-                    game_state["keys_collected"].append(item_found)
-                    output += "You find " + item_found["name"] + "."
-                    display(Image(filename='/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/gold.jpeg'))
-                    sound_file = '/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/victory.mp3'
-                    os.system("afplay " + sound_file)
+                    if object_relations[item["name"]]==[]:
+                        print("The bank safe is empty. You already have the gold and the key door a.")
+                    else: 
+                        item_found = object_relations[item["name"]].pop()
+                        game_state["keys_collected"].append(item_found)
+                        output += "You find " + item_found["name"] + "."
+                        display(Imageye(filename='/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/gold.jpeg'))
+                        sound_file = '/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/victory.mp3'
+                        os.system("afplay " + sound_file)
                 else:
                     output += "You don't have the right code"
             elif(item["type"] == "get_arrested"):
@@ -400,9 +403,15 @@ def examine_item(item_name):
                         have_key = True
                 if(have_key):
                     output += "You unlock it with a key you have."
+                    display(Image(filename='/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/celebrate.jpeg'))
+                    sound_file = '/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/nextroom.mp3'
+                    os.system("afplay " + sound_file)
                     next_room = get_next_room_of_door(item, current_room)
                 else:
                     output += "It is locked but you don't have the key."
+                    display(Image(filename='/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/sad.jpeg'))
+                    sound_file = '/Users/barbaramuniz/Documents/Ironhack_FullTime/Projects/Project1_EscapeRoomGame/wrong.mp3'
+                    os.system("afplay " + sound_file)
             else:
                 if(item["name"] in object_relations and len(object_relations[item["name"]])>0):
                     item_found = object_relations[item["name"]].pop()
